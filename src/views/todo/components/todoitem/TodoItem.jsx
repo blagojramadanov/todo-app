@@ -1,10 +1,9 @@
-import Button from "../../../../components/button/Button";
 import Checkbox from "../../../../components/checkbox/Checkbox";
 
-function TodoItem() {
+function TodoItem({ todoItem, toggleTodo }) {
   return (
     <div>
-      <Checkbox /> <Button />
+      <Checkbox todoItem={todoItem} toggleTodo={toggleTodo} />
     </div>
   );
 }

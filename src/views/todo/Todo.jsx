@@ -3,51 +3,32 @@ import TodoItem from "./components/todoitem/TodoItem";
 import Button from "../../components/button/Button";
 
 function Todo() {
-  const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState({
+    id: Math.random(),
+    content: "NAJACE",
+    done: false,
+  });
 
-  function addTodo() {
-    if (input === "") return;
-
-    setTodos([
-      ...todos,
-      {
-        id: Math.random(),
-        content: input,
-        done: false,
-      },
-    ]);
-
-    setInput("");
+  function handleChangeCheckbox() {
+    setTodo({
+      ...todo,
+      done: !todo.done,
+    });
   }
 
-  function toggleTodo(id) {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        }
-        return todo;
-      }),
-    );
+  function handleAddTodo() {
+    setTodo({
+      id: Math.random(),
+      content: "NOV TODO",
+      done: false,
+    });
   }
 
   return (
     <div>
-      <div>
-        <input value={input} onChange={(e) => setInput(e.target.value)} />
+      <TodoItem todoItem={todo} handleChangeCheckbox={handleChangeCheckbox} />
 
-        <Button onClick={addTodo} text="Add" />
-      </div>
-
-      <div>
-        {todos.map((todo) => (
-          <TodoItem key={todo.id} todoItem={todo} toggleTodo={toggleTodo} />
-        ))}
-      </div>
+      <Button onClick={handleAddTodo} text="Add" />
     </div>
   );
 }

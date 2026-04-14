@@ -1,13 +1,13 @@
-function Checkbox({ todoItem, toggleTodo }) {
+function Checkbox({ todoItem, handleChangeCheckbox }) {
   return (
     <div>
       <input
         type="checkbox"
         checked={todoItem.done}
-        onChange={() => toggleTodo(todoItem.id)}
+        onChange={handleChangeCheckbox}
       />
 
-      <span>{todoItem.content}</span>
+      <label>{todoItem.content}</label>
     </div>
   );
 }

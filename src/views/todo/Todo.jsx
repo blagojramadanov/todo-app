@@ -1,20 +1,51 @@
 import { useState } from "react";
-import TodoItem from "./components/todoitem/TodoItem";
+import TodoHeader from "./components/todoheader/TodoHeader";
+import TodoBody from "./components/todobody/TodoBody";
+import Input from "../../components/input/Input";
 
 function Todo() {
-  const [todos, setTodos] = useState([
-    { id: Math.random(), content: "NAJACE", done: true },
-  ]);
+  const [todos, setTodos] = useState([]);
+  const [value, setValue] = useState("");
 
-  function handleChangeCheckbox(event) {
-    console.log(event.target.checked);
+  function addTodo() {
+    if (!value.trim()) return;
+
+    const newTodo = {
+      id: Math.random(),
+      content: value,
+      done: false,
+    };
+
+    setTodos([...todos, newTodo]);
+    setValue("");
+  }
+
+  function handleChangeCheckbox(updatedTodo) {
+    setTodos(
+      todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo)),
+    );
+  }
+
+  function deleteTodo(id) {
+    setTodos(todos.filter((todo) => todo.id !== id));
   }
 
   return (
-    <div>
-      {todos.map((todo) => (
-        <TodoItem todoItem={todo} handleChangeCheckbox={handleChangeCheckbox} />
-      ))}
+    <div className="todo-container">
+      <div className="todo-header">
+        <TodoHeader />
+      </div>
+
+      <div className="todo-input-row">
+        <Input value={value} setValue={setValue} />
+        <button onClick={addTodo}>Add</button>
+      </div>
+
+      <TodoBody
+        todos={todos}
+        handleChangeCheckbox={handleChangeCheckbox}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 }
